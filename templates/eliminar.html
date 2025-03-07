@@ -1,12 +1,28 @@
 {% extends "layout.html" %}
-{% block container%}
+{% block container %}
 
-<a href="/" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="/static/img/img.png" alt="">
-    <div class="flex flex-col justify-between p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{nombre}} {{apaterno}}</h5>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Correo: {{email}}</p>
+<div class="max-w-xl mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">¿Estás seguro de que deseas eliminar este alumno?</h2>
+    
+    <div class="flex items-center space-x-4">
+        <img class="object-cover w-24 h-24 rounded-full" src="/static/img/img.png" alt="Alumno">
+        <div>
+            <h5 class="text-xl font-semibold text-gray-900 dark:text-white">{{ nombre }} {{ apellido }}</h5>
+            <p class="text-gray-700 dark:text-gray-400">Correo: {{ email }}</p>
+        </div>
     </div>
-</a>
+    <form method="POST" action="{{ url_for('eliminar', id=form.id.data) }}" class="mt-4">
+        {{ form.hidden_tag() }}  <!-- Agrega esta línea -->
+        <input type="hidden" name="id" value="{{ form.id.data }}">
+        
+        <button type="submit" class="px-4 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700">
+            Sí, eliminar
+        </button>
+        <a href="{{ url_for('index') }}" class="ml-2 px-4 py-2 bg-gray-600 text-white font-bold rounded-lg hover:bg-gray-700">
+            Cancelar
+        </a>
+    </form>
+    
+</div>
 
-{%endblock%}
+{% endblock %}

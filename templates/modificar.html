@@ -1,12 +1,37 @@
 {% extends "layout.html" %}
-{% block container%}
+{% block container %}
 
-<a href="/" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="/static/img/img.png" alt="">
-    <div class="flex flex-col justify-between p-4 leading-normal">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{nombre}} {{apaterno}}</h5>
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Correo: {{email}}</p>
-    </div>
-</a>
+<div class="max-w-xl mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Modificar Alumno</h2>
 
-{%endblock%}
+    <form method="POST" action="{{ url_for('modificar') }}">
+        <!-- Token CSRF -->
+        {{ form.hidden_tag() }}
+
+        <input type="hidden" name="id" value="{{ form.id.data }}">
+
+        <div class="mb-4">
+            <label for="nombre" class="block text-gray-700 dark:text-gray-300">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" class="w-full p-2 border rounded" value="{{ form.nombre.data }}" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="apaterno" class="block text-gray-700 dark:text-gray-300">Apellido:</label>
+            <input type="text" name="apaterno" id="apaterno" class="w-full p-2 border rounded" value="{{ form.apaterno.data }}" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="email" class="block text-gray-700 dark:text-gray-300">Correo:</label>
+            <input type="email" name="email" id="email" class="w-full p-2 border rounded" value="{{ form.email.data }}" required>
+        </div>
+
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700">
+            Guardar Cambios
+        </button>
+        <a href="{{ url_for('index') }}" class="ml-2 px-4 py-2 bg-gray-600 text-white font-bold rounded-lg hover:bg-gray-700">
+            Cancelar
+        </a>
+    </form>
+</div>
+
+{% endblock %}
